@@ -1,0 +1,25 @@
+body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  width: 100%;
+}
+
+.container.image {
+  height: 100vh;
+  background-image: url(../images/picasso.jpg);
+  opacity: 0.45;
+  background-repeat: no-repeat;
+  background-size: inherit;
+}
+
+@media screen and (min-width: 500px) {
+  .container.image {
+    background: url(../images/larger-picasso.jpg);
+  }
+}

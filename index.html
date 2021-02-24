@@ -4,14 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+    <link rel="stylesheet" crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
+    <h1>ART FINDER</h1>
+    <span class="icon">
+      <i class="fas fa-caret-down"></i>
+    </span>
   </header>
   <main>
+    <div class="home">
+      <div class="container image"></div>
+      <div class="container searchbox">
+        <form action="">
+          <div class="form">
+            <div class="search">
+              <label for="search">SEARCH</label>
+            </div>
+            <div class="input-search">
+              <input type="search" name="q" id="search" spellcheck="true" placeholder="ARTIST, TITLE, MEDIUM">
+            </div>
+          </div>
+          <div class="float-entries">
+            <div class="entries-container">
+              <div class="entries"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
