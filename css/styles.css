@@ -3,6 +3,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .home {
   position: relative;
 }
