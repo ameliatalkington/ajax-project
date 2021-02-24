@@ -1,38 +1,65 @@
 var $searchValues = document.querySelector('#search');
 var xhr = new XMLHttpRequest();
-var requestInfo = {
-  apikey: '&apikey=e7ef368c-c731-4658-8d3c-1adc7227b386',
-  classification: 'person'
-};
+var $entries = document.querySelector('.entries');
 var timeout;
 
-// xhr.open('GET', 'https://api.harvardartmuseums.org/object?page=1&apikey=e7ef368c-c731-4658-8d3c-1adc7227b386');
-// xhr.responseType = 'json';
-// xhr.addEventListener('load', function () {
-//   // dataEntries(xhr.response.info.next);
-// });
-// xhr.send();
-
-
-$searchValues.addEventListener('keyup', function() {
+$searchValues.addEventListener('keyup', function () {
   clearTimeout(timeout);
-  console.log(event.target.value);
+  removeAllChildNodes($entries);
   timeout = setTimeout(timeoutFunction, 500);
 });
 
 function timeoutFunction() {
-  //send xml request
-};
+  var data = $searchValues.value.split(' ').join('&');
+  sendData(data);
+}
 
+function sendData(value) {
+  xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://openaccess-api.clevelandart.org/api/artworks/?q=' + value);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    getFirst10Entries(xhr.response.data);
+  });
+  xhr.send();
+}
 
+function getFirst10Entries(data) {
+  if (data.length >= 10) {
+    for (var i = 0; i < 10; i++) {
+      appendEntry(data[i]);
+    }
+  } else {
+    for (var j = 0; j < data.length; j++) {
+      appendEntry(data[j]);
+    }
+  }
+}
 
+function appendEntry(dataObject) {
+  var $newSuggestion = document.createElement('div');
+  var $h3 = document.createElement('h3');
+  $newSuggestion.setAttribute('class', 'entry');
+  var textContent = '';
 
-// function dataEntries(url) {
-//   xhr = new XMLHttpRequest();
-//   xhr.open('GET', url);
-//   xhr.responseType = 'json';
-//   xhr.send();
-//   xhr.addEventListener('load', function () {
-//     console.log(xhr.response);
-//   });
-// }
+  if (dataObject.title !== null) {
+    textContent = dataObject.title;
+  }
+  if (dataObject.creators.length > 0) {
+    textContent = textContent + ', ' + dataObject.creators[0].description;
+  }
+  if (dataObject.department !== null) {
+    textContent = textContent + ', ' + dataObject.department;
+  }
+
+  $h3.textContent = textContent;
+
+  $newSuggestion.appendChild($h3);
+  $entries.appendChild($newSuggestion);
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}

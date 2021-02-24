@@ -55,4 +55,10 @@ h1 {
 
 form {
   width: 100%;
+  position: fixed;
+}
+
+.entries {
+  font-size: 14px;
+  background-color: white;
 }
