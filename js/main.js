@@ -8,6 +8,8 @@ var $form = document.querySelector('form');
 var $home = document.querySelector('.home');
 var $searchResults = document.querySelector('.search-results');
 var $row = document.querySelector('.row');
+var $entriesArray = document.querySelectorAll('.entry');
+var $imagesArray = document.querySelectorAll('col-half');
 
 var $headerTitle = document.querySelector('.title');
 
