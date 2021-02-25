@@ -49,3 +49,14 @@ img {
     width: 25%;
   }
 }
+
+@media screen and (min-width: 750px) {
+  .selection-container {
+    width: 700px;
+  }
+
+  .selection {
+    display: flex;
+    justify-content: center;
+  }
+}

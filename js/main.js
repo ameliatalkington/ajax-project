@@ -135,10 +135,18 @@ function renderSelectionData(dataObject) {
   var newObject = {
     image: '',
     title: '',
+    artist: '',
     description: ''
   };
-  newObject.image = dataObject.images.web.url;
+  if (dataObject.images !== null) {
+    newObject.image = dataObject.images.web.url;
+  } else {
+    newObject.image = 'images/placeholder-image.jpg';
+  }
   newObject.title = dataObject.title;
+  if (dataObject.creators.length > 0) {
+    newObject.artist = dataObject.creators[0].description;
+  }
   newObject.description = dataObject.wall_description;
   dataArray.push(newObject);
 }
@@ -146,14 +154,17 @@ function renderSelectionData(dataObject) {
 function renderSelection(object) {
   var $newImg = document.createElement('img');
   var $title = document.createElement('h3');
+  var $artist = document.createElement('h4');
   var $description = document.createElement('p');
 
   $newImg.setAttribute('src', object.image);
   $title.textContent = object.title;
+  $artist.textContent = object.artist;
   $description.textContent = object.description;
 
   $selectionContainer.appendChild($newImg);
   $selectionContainer.appendChild($title);
+  $selectionContainer.appendChild($artist);
   $selectionContainer.appendChild($description);
 }
 
