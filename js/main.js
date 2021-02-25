@@ -11,13 +11,16 @@ var $row = document.querySelector('.row');
 var $entriesArray = document.querySelectorAll('.entry');
 var $imagesArray = document.querySelectorAll('col-half');
 var $headerTitle = document.querySelector('.title');
+var $selection = document.querySelector('.selection');
 
 $row.addEventListener('click', function() {
-
+  $searchResults.className = 'search-results hidden';
+  $selection.className = 'selection';
 });
 
 $entries.addEventListener('click', function() {
-
+  $home.className = 'home hidden';
+  $selection.className = 'selection';
 });
 
 $headerTitle.addEventListener('click', function () {
