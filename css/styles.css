@@ -3,6 +3,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.hidden {
+  display: none;
+}
+
 .home {
   position: relative;
 }
@@ -26,6 +30,7 @@ header {
   align-items: flex-end;
   padding: 15px;
   padding-top: 1rem;
+  height: auto;
 }
 
 h1 {
@@ -81,4 +86,18 @@ form {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow-y: scroll;
+  margin: 10px;
+}
+
+.col-half {
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
