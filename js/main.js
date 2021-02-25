@@ -8,19 +8,29 @@ var $form = document.querySelector('form');
 var $home = document.querySelector('.home');
 var $searchResults = document.querySelector('.search-results');
 var $row = document.querySelector('.row');
-var $entriesArray = document.querySelectorAll('.entry');
-var $imagesArray = document.querySelectorAll('col-half');
+var $entriesArray = $entries.childNodes;
+var $imagesArray = $row.childNodes;
 var $headerTitle = document.querySelector('.title');
 var $selection = document.querySelector('.selection');
 
-$row.addEventListener('click', function() {
-  $searchResults.className = 'search-results hidden';
-  $selection.className = 'selection';
+$row.addEventListener('click', function () {
+  for (var n = 0; n < $imagesArray.length; n++) {
+    if (event.target === $imagesArray[n].firstChild) {
+      $searchResults.className = 'search-results hidden';
+      $selection.className = 'selection';
+      // Add function to show result
+    }
+  }
 });
 
-$entries.addEventListener('click', function() {
-  $home.className = 'home hidden';
-  $selection.className = 'selection';
+$entries.addEventListener('click', function () {
+  for (var v = 0; v < $entriesArray.length; v++) {
+    if (event.target === $entriesArray[v].firstChild) {
+      $home.className = 'home hidden';
+      $selection.className = 'selection';
+      // Add function to show result
+    }
+  }
 });
 
 $headerTitle.addEventListener('click', function () {
