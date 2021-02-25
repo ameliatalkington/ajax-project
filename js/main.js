@@ -154,6 +154,7 @@ function renderSelectionData(dataObject) {
 function renderSelection(object) {
   var $newImg = document.createElement('img');
   var $title = document.createElement('h3');
+  var $like = document.createElement('i');
   var $artist = document.createElement('h4');
   var $description = document.createElement('p');
 
@@ -161,11 +162,17 @@ function renderSelection(object) {
   $title.textContent = object.title;
   $artist.textContent = object.artist;
   $description.textContent = object.description;
+  $like.setAttribute('class', 'fas fa-heart heart');
 
   $selectionContainer.appendChild($newImg);
+  $selectionContainer.appendChild($like);
   $selectionContainer.appendChild($title);
   $selectionContainer.appendChild($artist);
   $selectionContainer.appendChild($description);
+
+  $like.addEventListener('click', function () {
+    $like.style.color = 'red';
+  });
 }
 
 function reset() {

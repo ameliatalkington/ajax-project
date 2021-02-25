@@ -111,3 +111,11 @@ form {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.heart {
+  font-size: 24px;
+  color: lightgray;
+  padding-top: 1rem;
+  float: right;
+  padding-right: 3px;
+}
