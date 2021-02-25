@@ -14,6 +14,19 @@ var $headerTitle = document.querySelector('.title');
 var $selection = document.querySelector('.selection');
 var $selectionContainer = document.querySelector('.selection-container');
 var dataArray = [];
+var $downArrow = document.querySelector('.down-arrow');
+var $modal = document.querySelector('.modal');
+var isOpen = false;
+
+$downArrow.addEventListener('click', function () {
+  if (isOpen) {
+    $modal.className = 'modal hidden';
+    isOpen = false;
+  } else {
+    $modal.className = 'modal';
+    isOpen = true;
+  }
+});
 
 $row.addEventListener('click', function () {
   for (var n = 0; n < $imagesArray.length; n++) {

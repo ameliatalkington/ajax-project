@@ -3,6 +3,32 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+main {
+  position: relative;
+}
+
+.modal {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-container {
+  width: 100%;
+  background-color: white;
+  padding: 0.2rem;
+  padding-left: 15px;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 20px;
+}
+
 .hidden {
   display: none;
 }
@@ -13,6 +39,7 @@
 
 .container.searchbox {
   position: absolute;
+  z-index: 9;
   height: 60%;
   top: 0;
   left: 0;
@@ -60,7 +87,6 @@ h1 {
 
 form {
   width: 100%;
-  position: fixed;
 }
 
 .entry {
@@ -76,6 +102,7 @@ form {
 
 .entries-container {
   position: absolute;
+  z-index: 9;
   width: 75%;
   height: 300%;
   overflow-y: scroll;
