@@ -101,3 +101,13 @@ form {
   display: flex;
   align-items: center;
 }
+
+.selection-container {
+  height: 83vh;
+  margin: 1rem;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

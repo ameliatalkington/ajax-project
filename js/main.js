@@ -12,13 +12,15 @@ var $entriesArray = $entries.childNodes;
 var $imagesArray = $row.childNodes;
 var $headerTitle = document.querySelector('.title');
 var $selection = document.querySelector('.selection');
+var $selectionContainer = document.querySelector('.selection-container');
+var dataArray = [];
 
 $row.addEventListener('click', function () {
   for (var n = 0; n < $imagesArray.length; n++) {
     if (event.target === $imagesArray[n].firstChild) {
       $searchResults.className = 'search-results hidden';
       $selection.className = 'selection';
-      // Add function to show result
+      renderSelection(dataArray[n]);
     }
   }
 });
@@ -28,7 +30,7 @@ $entries.addEventListener('click', function () {
     if (event.target === $entriesArray[v].firstChild) {
       $home.className = 'home hidden';
       $selection.className = 'selection';
-      // Add function to show result
+      renderSelection(dataArray[v]);
     }
   }
 });
@@ -68,15 +70,18 @@ function sendData(value) {
 }
 
 function getFirst10Entries(data) {
+  dataArray = [];
   if (data.length >= 10) {
     for (var i = 0; i < 10; i++) {
       appendEntry(data[i]);
       loadSearch(data[i]);
+      renderSelectionData(data[i]);
     }
   } else {
     for (var j = 0; j < data.length; j++) {
       appendEntry(data[j]);
       loadSearch(data[j]);
+      renderSelectionData(data[j]);
     }
   }
 }
@@ -126,7 +131,34 @@ function loadSearch(dataObject) {
   $row.appendChild($newCol);
 }
 
+function renderSelectionData(dataObject) {
+  var newObject = {
+    image: '',
+    title: '',
+    description: ''
+  };
+  newObject.image = dataObject.images.web.url;
+  newObject.title = dataObject.title;
+  newObject.description = dataObject.wall_description;
+  dataArray.push(newObject);
+}
+
+function renderSelection(object) {
+  var $newImg = document.createElement('img');
+  var $title = document.createElement('h3');
+  var $description = document.createElement('p');
+
+  $newImg.setAttribute('src', object.image);
+  $title.textContent = object.title;
+  $description.textContent = object.description;
+
+  $selectionContainer.appendChild($newImg);
+  $selectionContainer.appendChild($title);
+  $selectionContainer.appendChild($description);
+}
+
 function reset() {
   removeAllChildNodes($row);
   removeAllChildNodes($entries);
+  removeAllChildNodes($selectionContainer);
 }
