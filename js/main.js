@@ -10,8 +10,15 @@ var $searchResults = document.querySelector('.search-results');
 var $row = document.querySelector('.row');
 var $entriesArray = document.querySelectorAll('.entry');
 var $imagesArray = document.querySelectorAll('col-half');
-
 var $headerTitle = document.querySelector('.title');
+
+$row.addEventListener('click', function() {
+
+});
+
+$entries.addEventListener('click', function() {
+
+});
 
 $headerTitle.addEventListener('click', function () {
   $form.reset();
