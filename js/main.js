@@ -165,6 +165,8 @@ function renderSelectionData(dataObject) {
 }
 
 function renderSelection(object) {
+  object.setEntryNum = data.nextEntryNum;
+
   var $newImg = document.createElement('img');
   var $title = document.createElement('h3');
   var $like = document.createElement('i');
@@ -185,6 +187,8 @@ function renderSelection(object) {
 
   $like.addEventListener('click', function () {
     $like.style.color = 'red';
+    data.entries.push(object);
+    data.nextEntryNum++;
   });
 }
 
