@@ -29,6 +29,7 @@ $favorites.addEventListener('click', function () {
   $searchResults.className = 'search-results hidden';
   $selection.className = 'selection hidden';
   $userFavorites.className = 'user-favorites';
+  removeAllChildNodes($favoritesRow);
   addFavoritesEntries(data.entries);
 });
 
@@ -224,7 +225,6 @@ function reset() {
   removeAllChildNodes($row);
   removeAllChildNodes($entries);
   removeAllChildNodes($selectionContainer);
-
 }
 
 function addFavoritesEntries(arrayOfObjects) {
