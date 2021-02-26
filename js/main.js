@@ -24,6 +24,7 @@ var $favoritesImages = $favoritesRow.childNodes;
 
 $favorites.addEventListener('click', function () {
   $modal.className = 'modal hidden';
+  isOpen = false;
   $home.className = 'home hidden';
   $searchResults.className = 'search-results hidden';
   $selection.className = 'selection hidden';
@@ -57,6 +58,7 @@ $row.addEventListener('click', function () {
   for (var n = 0; n < $imagesArray.length; n++) {
     if (event.target === $imagesArray[n].firstChild) {
       $searchResults.className = 'search-results hidden';
+      $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(dataArray[n]);
     }
@@ -67,6 +69,7 @@ $entries.addEventListener('click', function () {
   for (var v = 0; v < $entriesArray.length; v++) {
     if (event.target === $entriesArray[v].firstChild) {
       $home.className = 'home hidden';
+      $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(dataArray[v]);
     }

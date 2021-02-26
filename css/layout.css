@@ -20,7 +20,8 @@ body {
 }
 
 .search-results,
-.user-favorites {
+.user-favorites,
+.selection {
   position: relative;
   height: 82vh;
 }
@@ -31,10 +32,12 @@ body {
 }
 
 .row,
-.favorites-row {
+.favorites-row,
+.selection-container {
   height: 100%;
   position: absolute;
   top: 0;
+  bottom: 0;
 }
 
 .col-half {

@@ -11,9 +11,9 @@ main {
   position: absolute;
   z-index: 10;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.75);
 }
 
@@ -125,6 +125,7 @@ form {
 }
 
 .favorites-row {
+  z-index: 9;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
