@@ -215,9 +215,13 @@ function renderSelection(object) {
   $selectionContainer.appendChild($description);
 
   $like.addEventListener('click', function () {
-    $like.style.color = 'red';
-    data.entries.push(object);
-    data.nextEntryNum++;
+    if ($like.style.color === 'red') {
+      $like.style.color = 'lightgray';
+    } else {
+      $like.style.color = 'red';
+      data.entries.push(object);
+      data.nextEntryNum++;
+    }
   });
 }
 
