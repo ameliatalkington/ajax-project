@@ -19,12 +19,19 @@ body {
   background-size: inherit;
 }
 
-.search-results {
+.search-results,
+.user-favorites {
   position: relative;
   height: 82vh;
 }
 
-.row {
+.favorites-content {
+  position: relative;
+  height: 90%;
+}
+
+.row,
+.favorites-row {
   height: 100%;
   position: absolute;
   top: 0;

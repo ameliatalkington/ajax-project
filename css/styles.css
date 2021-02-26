@@ -25,6 +25,7 @@ main {
 }
 
 h2 {
+  margin: 1rem;
   font-weight: 400;
   font-size: 20px;
 }
@@ -116,6 +117,14 @@ form {
 }
 
 .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow-y: scroll;
+  margin: 10px;
+}
+
+.favorites-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
