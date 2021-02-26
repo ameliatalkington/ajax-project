@@ -7,14 +7,34 @@ main {
   position: relative;
 }
 
-.modal {
+.modal,
+.like-modal {
   position: absolute;
   z-index: 10;
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh;
+  height: 90vh;
   background-color: rgba(0, 0, 0, 0.75);
+}
+
+.like-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-modal-container {
+  padding: 1.5rem;
+  padding-bottom: 2rem;
+  width: 80%;
+  height: 27%;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .modal-container {
@@ -155,4 +175,20 @@ form {
   padding-top: 1rem;
   float: right;
   padding-right: 3px;
+}
+
+button {
+  border: none;
+  width: 80px;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.cancel {
+  background-color: rgb(235, 133, 133);
+}
+
+.yes {
+  background-color: rgb(188, 188, 188);
 }
