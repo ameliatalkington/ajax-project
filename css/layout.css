@@ -19,15 +19,25 @@ body {
   background-size: inherit;
 }
 
-.search-results {
+.search-results,
+.user-favorites,
+.selection {
   position: relative;
   height: 82vh;
 }
 
-.row {
+.favorites-content {
+  position: relative;
+  height: 90%;
+}
+
+.row,
+.favorites-row,
+.selection-container {
   height: 100%;
   position: absolute;
   top: 0;
+  bottom: 0;
 }
 
 .col-half {
@@ -47,5 +57,16 @@ img {
 @media screen and (min-width: 675px) {
   .col-quarter {
     width: 25%;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .selection-container {
+    width: 700px;
+  }
+
+  .selection {
+    display: flex;
+    justify-content: center;
   }
 }
