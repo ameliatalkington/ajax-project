@@ -37,7 +37,7 @@ $favorites.addEventListener('click', function () {
 });
 
 $downArrow.addEventListener('click', function () {
-  if (isOpen || $userFavorites.className === 'user-favorites') {
+  if (isOpen || $userFavorites.className === 'user-favorites' || $likeModal.className === 'like-modal') {
     $modal.className = 'modal hidden';
     isOpen = false;
   } else {
