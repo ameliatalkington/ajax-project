@@ -3,24 +3,23 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.like-modal-container {
-  padding: 1.5rem;
-  padding-bottom: 2rem;
-  width: 80%;
-  height: 27%;
-  background-color: white;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  text-align: center;
-  border-radius: 10px;
+.hidden {
+  display: none;
 }
 
-.modal-container {
+main {
+  position: relative;
+  height: 100%;
+}
+
+.home {
+  position: relative;
   width: 100%;
-  background-color: white;
-  padding: 0.2rem;
-  padding-left: 15px;
+  height: 100%;
+}
+
+form {
+  width: 100%;
 }
 
 h1 {
@@ -102,6 +101,13 @@ header {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.search-results,
+.user-favorites,
+.selection {
+  height: 88%;
+  overflow-y: scroll;
 }
 
 .row,

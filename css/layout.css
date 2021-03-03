@@ -7,15 +7,6 @@ body {
   right: 0;
 }
 
-.hidden {
-  display: none;
-}
-
-main {
-  position: relative;
-  height: 100%;
-}
-
 .modal {
   z-index: 3;
 }
@@ -38,10 +29,24 @@ main {
   justify-content: center;
 }
 
-.home {
-  position: relative;
+.like-modal-container {
+  padding: 1.5rem;
+  padding-bottom: 2rem;
+  width: 300px;
+  height: 175px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-container {
   width: 100%;
-  height: 100%;
+  background-color: white;
+  padding: 0.2rem;
+  padding-left: 15px;
 }
 
 .container {
@@ -54,17 +59,6 @@ main {
   opacity: 0.45;
   background-repeat: no-repeat;
   background-size: inherit;
-}
-
-form {
-  width: 100%;
-}
-
-.search-results,
-.user-favorites,
-.selection {
-  height: 88%;
-  overflow-y: scroll;
 }
 
 .col-full {
@@ -84,9 +78,14 @@ img {
   .container.image {
     background-image: url(../images/larger-picasso.jpg);
   }
+
+  .like-modal-container {
+    width: 425px;
+    height: 200px;
+  }
 }
 
-@media screen and (min-width: 675px) {
+@media screen and (min-width: 600px) {
   .col-quarter {
     width: 25%;
   }
@@ -95,15 +94,13 @@ img {
     width: 45%;
   }
 
-  @media screen and (min-width: 600px) {
-    .selection-container {
-      width: 600px;
-    }
+  .selection-container {
+    width: 600px;
+  }
 
-    .selection,
-    .favorites-row {
-      display: flex;
-      justify-content: center;
-    }
+  .selection,
+  .favorites-row {
+    display: flex;
+    justify-content: center;
   }
 }
