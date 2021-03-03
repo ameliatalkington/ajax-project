@@ -3,8 +3,8 @@
 var previousDataJSON = localStorage.getItem('ajax-project-local-storage');
 
 var data = {
-  entries: [],
-  nextEntryNum: 1
+  entryNum: null,
+  entries: []
 };
 
 if (previousDataJSON !== null) {

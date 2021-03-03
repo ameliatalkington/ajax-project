@@ -23,12 +23,12 @@ body {
 .user-favorites,
 .selection {
   position: relative;
-  height: 82vh;
+  height: 87vh;
 }
 
 .favorites-content {
   position: relative;
-  height: 90%;
+  height: 93%;
 }
 
 .row,
@@ -65,17 +65,17 @@ img {
   }
 
   .col-half-fav {
-    width: 50%;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .selection-container {
-    width: 700px;
+    width: 45%;
   }
 
-  .selection {
-    display: flex;
-    justify-content: center;
+  @media screen and (min-width: 750px) {
+    .selection-container {
+      width: 700px;
+    }
+
+    .selection {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
