@@ -221,10 +221,12 @@ function renderSelection(object) {
   $like.addEventListener('click', function () {
     if ($like.style.color === 'red') {
       $likeModal.className = 'like-modal';
-      data.entryNum = object.entryNum;
+      data.selectedID = object.entryID;
     } else {
       $like.style.color = 'red';
+      object.entryID = data.nextEntryID;
       data.entries.push(object);
+      data.nextEntryID++;
     }
   });
 
@@ -234,7 +236,11 @@ function renderSelection(object) {
 }
 
 $yes.addEventListener('click', function () {
-  data.entries.splice(data.entryNum, 1);
+  for (var j = 0; j < data.entries.length; j++) {
+    if (data.entries[j].entryID === data.selectedID) {
+      data.entries.splice(j, 1);
+    }
+  }
   removeAllChildNodes($favoritesRow);
   addFavoritesEntries(data.entries);
   $likeModal.className = 'like-modal hidden';
@@ -251,7 +257,6 @@ function reset() {
 
 function addFavoritesEntries(arrayOfObjects) {
   for (var i = 0; i < arrayOfObjects.length; i++) {
-    arrayOfObjects[i].entryNum = i;
     var $newCol = document.createElement('div');
     var $newImg = document.createElement('img');
     $newCol.setAttribute('class', 'col-half-fav col-quarter');
