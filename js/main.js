@@ -117,11 +117,16 @@ function sendData(value) {
 
 function getFirst10Entries(data) {
   dataArray = [];
-  if (data.length >= 10) {
-    for (var i = 0; i < 10; i++) {
-      appendEntry(data[i]);
-      loadSearch(data[i]);
-      renderSelectionData(data[i]);
+  var length = 20;
+  if (data.length >= 20) {
+    for (var i = 0; i < length; i++) {
+      if (data[i].images !== null) {
+        appendEntry(data[i]);
+        loadSearch(data[i]);
+        renderSelectionData(data[i]);
+      } else {
+        length++;
+      }
     }
   } else {
     for (var j = 0; j < data.length; j++) {
