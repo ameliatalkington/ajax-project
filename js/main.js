@@ -21,20 +21,23 @@ var $favorites = document.querySelector('.favorites');
 var $userFavorites = document.querySelector('.user-favorites');
 var $favoritesRow = document.querySelector('.favorites-row');
 var $favoritesImages = $favoritesRow.childNodes;
+var $likeModal = document.querySelector('.like-modal');
+var $cancel = document.querySelector('.cancel');
+var $yes = document.querySelector('.yes');
 
 $favorites.addEventListener('click', function () {
+  removeAllChildNodes($favoritesRow);
   $modal.className = 'modal hidden';
   isOpen = false;
   $home.className = 'home hidden';
   $searchResults.className = 'search-results hidden';
   $selection.className = 'selection hidden';
   $userFavorites.className = 'user-favorites';
-  removeAllChildNodes($favoritesRow);
   addFavoritesEntries(data.entries);
 });
 
 $downArrow.addEventListener('click', function () {
-  if (isOpen) {
+  if (isOpen || $userFavorites.className === 'user-favorites' || $likeModal.className === 'like-modal') {
     $modal.className = 'modal hidden';
     isOpen = false;
   } else {
@@ -80,6 +83,7 @@ $entries.addEventListener('click', function () {
 $headerTitle.addEventListener('click', function () {
   $form.reset();
   reset();
+  $modal.className = 'modal hidden';
   $home.className = 'home';
   $searchResults.className = 'search-results hidden';
 });
@@ -194,7 +198,7 @@ function renderSelectionData(dataObject) {
 }
 
 function renderSelection(object) {
-  object.setEntryNum = data.nextEntryNum;
+  removeAllChildNodes($selectionContainer);
 
   var $newImg = document.createElement('img');
   var $title = document.createElement('h3');
@@ -215,28 +219,50 @@ function renderSelection(object) {
   $selectionContainer.appendChild($description);
 
   $like.addEventListener('click', function () {
-    $like.style.color = 'red';
-    data.entries.push(object);
-    data.nextEntryNum++;
+    if ($like.style.color === 'red') {
+      $likeModal.className = 'like-modal';
+      data.selectedID = object.entryID;
+    } else {
+      $like.style.color = 'red';
+      object.entryID = data.nextEntryID;
+      data.entries.push(object);
+      data.nextEntryID++;
+    }
+  });
+
+  $cancel.addEventListener('click', function () {
+    $likeModal.className = 'like-modal hidden';
   });
 }
+
+$yes.addEventListener('click', function () {
+  for (var j = 0; j < data.entries.length; j++) {
+    if (data.entries[j].entryID === data.selectedID) {
+      data.entries.splice(j, 1);
+    }
+  }
+  removeAllChildNodes($favoritesRow);
+  addFavoritesEntries(data.entries);
+  $likeModal.className = 'like-modal hidden';
+  $selection.className = 'selection hidden';
+  $userFavorites.className = 'user-favorites';
+});
 
 function reset() {
   removeAllChildNodes($row);
   removeAllChildNodes($entries);
   removeAllChildNodes($selectionContainer);
+
 }
 
 function addFavoritesEntries(arrayOfObjects) {
-
   for (var i = 0; i < arrayOfObjects.length; i++) {
     var $newCol = document.createElement('div');
     var $newImg = document.createElement('img');
-    $newCol.setAttribute('class', 'col-half col-quarter');
+    $newCol.setAttribute('class', 'col-half-fav col-quarter');
     $newCol.appendChild($newImg);
     $newImg.setAttribute('src', arrayOfObjects[i].image);
     $newImg.setAttribute('alt', arrayOfObjects[i].title);
     $favoritesRow.appendChild($newCol);
   }
-
 }
