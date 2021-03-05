@@ -24,6 +24,8 @@ var $favoritesImages = $favoritesRow.childNodes;
 var $likeModal = document.querySelector('.like-modal');
 var $cancel = document.querySelector('.cancel');
 var $yes = document.querySelector('.yes');
+var $loaders = document.querySelectorAll('.loader');
+var $loaderPage = document.querySelector('.loader-page');
 
 $favorites.addEventListener('click', function () {
   removeAllChildNodes($favoritesRow);
@@ -110,12 +112,18 @@ function sendData(value) {
   xhr.open('GET', 'https://openaccess-api.clevelandart.org/api/artworks/?q=' + value);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    getFirst10Entries(xhr.response.data);
+    getFirst20Entries(xhr.response.data);
   });
+  $loaders[0].className = 'loader';
+  $loaders[1].className = 'loader';
+  $loaderPage.className = 'loader-page';
   xhr.send();
 }
 
-function getFirst10Entries(data) {
+function getFirst20Entries(data) {
+  $loaders[0].className = 'loader hidden';
+  $loaders[1].className = 'loader hidden';
+  $loaderPage.className = 'loader-page hidden';
   dataArray = [];
   var length = 20;
   if (data.length >= 20) {
