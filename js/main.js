@@ -103,8 +103,9 @@ $form.addEventListener('submit', function () {
 });
 
 function timeoutFunction() {
-  var data = $searchValues.value.split(' ').join('&');
-  sendData(data);
+  var userData = $searchValues.value.split(' ').join('&');
+  data.lastSearch = userData;
+  sendData(userData);
 }
 
 function sendData(value) {

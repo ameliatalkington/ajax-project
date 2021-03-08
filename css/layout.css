@@ -55,8 +55,9 @@ body {
 
 .container.image {
   height: 100%;
-  background-image: url(../images/picasso.jpg);
+  background-image: url(../images/new-picasso.jpg);
   opacity: 0.45;
+  object-fit: scale-down;
   background-repeat: no-repeat;
   background-size: inherit;
 }
@@ -75,10 +76,6 @@ img {
 }
 
 @media screen and (min-width: 500px) {
-  .container.image {
-    background-image: url(../images/larger-picasso.jpg);
-  }
-
   .like-modal-container {
     width: 425px;
     height: 200px;
