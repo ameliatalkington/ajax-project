@@ -211,6 +211,7 @@ function loadSearch(dataObject) {
   var $newImg = document.createElement('img');
   $newCol.setAttribute('class', 'col-half col-quarter');
   $newCol.appendChild($newImg);
+  $newImg.style.cursor = 'pointer';
 
   if (dataObject.images !== null) {
     $newImg.setAttribute('src', dataObject.images.web.url);
@@ -257,6 +258,7 @@ function renderSelection(object) {
   $artist.textContent = object.artist;
   $description.textContent = object.description;
   $like.setAttribute('class', 'fas fa-heart heart');
+  $like.style.cursor = 'pointer';
 
   $selectionContainer.appendChild($newImg);
   $selectionContainer.appendChild($like);
@@ -305,6 +307,7 @@ function addFavoritesEntries(arrayOfObjects) {
   for (var i = 0; i < arrayOfObjects.length; i++) {
     var $newCol = document.createElement('div');
     var $newImg = document.createElement('img');
+    $newImg.style.cursor = 'pointer';
     $newCol.setAttribute('class', 'col-half-fav col-quarter');
     $newCol.appendChild($newImg);
     $newImg.setAttribute('src', arrayOfObjects[i].image);

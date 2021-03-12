@@ -4,6 +4,7 @@
 }
 
 main {
+  color: rgb(44, 44, 44);
   position: relative;
   height: 100%;
 }
@@ -22,6 +23,7 @@ h1 {
   font-size: 36px;
   margin-bottom: 0;
   font-weight: 300;
+  cursor: pointer;
 }
 
 h2 {
@@ -31,7 +33,6 @@ h2 {
 }
 
 header {
-  height: 12%;
   position: static;
   background-color: rgba(0, 118, 226, 1);
   color: white;
@@ -43,6 +44,7 @@ header {
 
 .icon {
   font-size: 30px;
+  cursor: pointer;
 }
 
 .container.searchbox {
@@ -126,6 +128,7 @@ header {
   margin-top: 1.5rem;
   text-align: left;
   color: rgb(93, 93, 93);
+  cursor: pointer;
 }
 
 .selection-container {
@@ -148,6 +151,7 @@ header {
   padding-top: 1rem;
   float: right;
   padding-right: 3px;
+  cursor: pointer;
 }
 
 button {
@@ -156,6 +160,7 @@ button {
   height: 30px;
   font-size: 16px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .cancel {
