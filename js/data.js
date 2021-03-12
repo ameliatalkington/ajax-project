@@ -6,7 +6,8 @@ var data = {
   nextEntryID: 1,
   entries: [],
   selectedID: null,
-  view: null,
+  view: 'home-page',
+  lastView: null,
   lastSearch: null
 };
 
