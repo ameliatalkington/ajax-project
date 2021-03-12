@@ -16,6 +16,7 @@ if (previousDataJSON !== null) {
 }
 
 window.addEventListener('beforeunload', function (event) {
+  data.view = 'home-page';
   var dataJSON = JSON.stringify(data);
   localStorage.setItem('ajax-project-local-storage', dataJSON);
 });

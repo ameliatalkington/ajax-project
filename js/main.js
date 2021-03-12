@@ -26,9 +26,31 @@ var $cancel = document.querySelector('.cancel');
 var $yes = document.querySelector('.yes');
 var $loaders = document.querySelectorAll('.loader');
 var $loaderPage = document.querySelector('.loader-page');
+var $back = document.querySelector('.back-button');
+
+$back.addEventListener('click', function () {
+  if (data.lastView === 'favorites-page') {
+    $selection.className = 'selection hidden';
+    $userFavorites.className = 'user-favorites';
+    data.lastView = data.view;
+    data.view = 'favorites-page';
+  } else if (data.lastView === 'home-page') {
+    $selection.className = 'selection hidden';
+    $home.className = 'home';
+    data.lastView = data.view;
+    data.view = 'home-page';
+  } else if (data.lastView === 'search-results-page') {
+    $selection.className = 'selection hidden';
+    $searchResults.className = 'search-results';
+    data.lastView = data.view;
+    data.view = 'search-results-page';
+  }
+});
 
 $favorites.addEventListener('click', function () {
   removeAllChildNodes($favoritesRow);
+  data.lastView = data.view;
+  data.view = 'favorites-page';
   $modal.className = 'modal hidden';
   isOpen = false;
   $home.className = 'home hidden';
@@ -51,6 +73,8 @@ $downArrow.addEventListener('click', function () {
 $favoritesRow.addEventListener('click', function () {
   for (var n = 0; n < $favoritesImages.length; n++) {
     if (event.target === $favoritesImages[n].firstChild) {
+      data.lastView = data.view;
+      data.view = 'selection-page';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(data.entries[n]);
@@ -63,6 +87,8 @@ $favoritesRow.addEventListener('click', function () {
 $row.addEventListener('click', function () {
   for (var n = 0; n < $imagesArray.length; n++) {
     if (event.target === $imagesArray[n].firstChild) {
+      data.lastView = data.view;
+      data.view = 'selection-page';
       $searchResults.className = 'search-results hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
@@ -74,6 +100,8 @@ $row.addEventListener('click', function () {
 $entries.addEventListener('click', function () {
   for (var v = 0; v < $entriesArray.length; v++) {
     if (event.target === $entriesArray[v].firstChild) {
+      data.lastView = data.view;
+      data.view = 'selection-page';
       $home.className = 'home hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
@@ -85,6 +113,8 @@ $entries.addEventListener('click', function () {
 $headerTitle.addEventListener('click', function () {
   $form.reset();
   reset();
+  data.lastView = data.view;
+  data.view = 'home-page';
   $modal.className = 'modal hidden';
   $home.className = 'home';
   $searchResults.className = 'search-results hidden';
@@ -98,6 +128,8 @@ $searchValues.addEventListener('keyup', function () {
 
 $form.addEventListener('submit', function () {
   event.preventDefault();
+  data.lastView = data.view;
+  data.view = 'search-results-page';
   $home.className = 'home hidden';
   $searchResults.className = 'search-results';
 });
