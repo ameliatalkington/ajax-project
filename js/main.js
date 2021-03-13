@@ -1,7 +1,6 @@
 // const { formatters } = require("stylelint");
 
 var $searchValues = document.querySelector('#search');
-var xhr = new XMLHttpRequest();
 var $entries = document.querySelector('.entries');
 var timeout;
 var $form = document.querySelector('form');
@@ -18,6 +17,7 @@ var $downArrow = document.querySelector('.down-arrow');
 var $modal = document.querySelector('.modal');
 var isOpen = false;
 var $favorites = document.querySelector('.favorites');
+var $menuSearch = document.querySelector('.menu-search');
 var $userFavorites = document.querySelector('.user-favorites');
 var $favoritesRow = document.querySelector('.favorites-row');
 var $favoritesImages = $favoritesRow.childNodes;
@@ -27,6 +27,15 @@ var $yes = document.querySelector('.yes');
 var $loaders = document.querySelectorAll('.loader');
 var $loaderPage = document.querySelector('.loader-page');
 var $back = document.querySelector('.back-button');
+var $noResults = document.querySelector('.no-results');
+var $okButton = document.querySelector('.ok');
+
+$okButton.addEventListener('click', function () {
+  $form.reset();
+  reset();
+  $home.className = 'home';
+  $noResults.className = 'no-results hidden';
+});
 
 $back.addEventListener('click', function () {
   if (data.lastView === 'favorites-page') {
@@ -60,8 +69,21 @@ $favorites.addEventListener('click', function () {
   addFavoritesEntries(data.entries);
 });
 
+$menuSearch.addEventListener('click', function () {
+  data.lastView = data.view;
+  data.view = 'home-page';
+  $modal.className = 'modal hidden';
+  isOpen = false;
+  $form.reset();
+  reset();
+  $home.className = 'home';
+  $searchResults.className = 'search-results hidden';
+  $selection.className = 'selection hidden';
+  $userFavorites.className = 'user-favorites hidden';
+});
+
 $downArrow.addEventListener('click', function () {
-  if (isOpen || $userFavorites.className === 'user-favorites' || $likeModal.className === 'like-modal') {
+  if (isOpen || $likeModal.className === 'like-modal' || $noResults.className === 'no-results') {
     $modal.className = 'modal hidden';
     isOpen = false;
   } else {
@@ -93,6 +115,12 @@ $row.addEventListener('click', function () {
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(dataArray[n]);
+      var $like = document.querySelector('.heart');
+      for (var i = 0; i < data.entries.length; i++) {
+        if (dataArray[n].image === data.entries[i].image) {
+          $like.style.color = 'red';
+        }
+      }
     }
   }
 });
@@ -141,7 +169,7 @@ function timeoutFunction() {
 }
 
 function sendData(value) {
-  xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://openaccess-api.clevelandart.org/api/artworks/?q=' + value);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
@@ -159,8 +187,8 @@ function getFirst20Entries(data) {
   $loaderPage.className = 'loader-page hidden';
   dataArray = [];
   var length = 20;
-  if (data.length >= 20) {
-    for (var i = 0; i < length; i++) {
+  if (data.length) {
+    for (var i = 0; i < data.length && i < length; i++) {
       if (data[i].images !== null) {
         appendEntry(data[i]);
         loadSearch(data[i]);
@@ -170,11 +198,8 @@ function getFirst20Entries(data) {
       }
     }
   } else {
-    for (var j = 0; j < data.length; j++) {
-      appendEntry(data[j]);
-      loadSearch(data[j]);
-      renderSelectionData(data[j]);
-    }
+    $home.className = 'home hidden';
+    $noResults.className = 'no-results';
   }
 }
 

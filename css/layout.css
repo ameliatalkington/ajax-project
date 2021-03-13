@@ -25,7 +25,8 @@ header {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.like-modal-background {
+.like-modal-background,
+.no-result-background {
   width: 100%;
   height: 88%;
   display: flex;
@@ -33,7 +34,8 @@ header {
   justify-content: center;
 }
 
-.like-modal-container {
+.like-modal-container,
+.no-result-container {
   padding: 1.5rem;
   padding-bottom: 2rem;
   width: 300px;
