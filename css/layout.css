@@ -7,10 +7,6 @@ body {
   right: 0;
 }
 
-header {
-  height: 80px;
-}
-
 .modal {
   z-index: 3;
 }
@@ -25,8 +21,7 @@ header {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.like-modal-background,
-.no-result-background {
+.like-modal-background {
   width: 100%;
   height: 88%;
   display: flex;
@@ -34,8 +29,7 @@ header {
   justify-content: center;
 }
 
-.like-modal-container,
-.no-result-container {
+.like-modal-container {
   padding: 1.5rem;
   padding-bottom: 2rem;
   width: 300px;
@@ -61,9 +55,8 @@ header {
 
 .container.image {
   height: 100%;
-  background-image: url(../images/new-picasso.jpg);
+  background-image: url(../images/picasso.jpg);
   opacity: 0.45;
-  object-fit: scale-down;
   background-repeat: no-repeat;
   background-size: inherit;
 }
@@ -82,6 +75,10 @@ img {
 }
 
 @media screen and (min-width: 500px) {
+  .container.image {
+    background-image: url(../images/larger-picasso.jpg);
+  }
+
   .like-modal-container {
     width: 425px;
     height: 200px;
@@ -97,7 +94,7 @@ img {
     width: 45%;
   }
 
-  .selection-contents {
+  .selection-container {
     width: 600px;
   }
 

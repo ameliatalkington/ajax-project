@@ -1,6 +1,7 @@
 // const { formatters } = require("stylelint");
 
 var $searchValues = document.querySelector('#search');
+var xhr = new XMLHttpRequest();
 var $entries = document.querySelector('.entries');
 var timeout;
 var $form = document.querySelector('form');
@@ -17,7 +18,6 @@ var $downArrow = document.querySelector('.down-arrow');
 var $modal = document.querySelector('.modal');
 var isOpen = false;
 var $favorites = document.querySelector('.favorites');
-var $menuSearch = document.querySelector('.menu-search');
 var $userFavorites = document.querySelector('.user-favorites');
 var $favoritesRow = document.querySelector('.favorites-row');
 var $favoritesImages = $favoritesRow.childNodes;
@@ -26,40 +26,9 @@ var $cancel = document.querySelector('.cancel');
 var $yes = document.querySelector('.yes');
 var $loaders = document.querySelectorAll('.loader');
 var $loaderPage = document.querySelector('.loader-page');
-var $back = document.querySelector('.back-button');
-var $noResults = document.querySelector('.no-results');
-var $okButton = document.querySelector('.ok');
-
-$okButton.addEventListener('click', function () {
-  $form.reset();
-  reset();
-  $home.className = 'home';
-  $noResults.className = 'no-results hidden';
-});
-
-$back.addEventListener('click', function () {
-  if (data.lastView === 'favorites-page') {
-    $selection.className = 'selection hidden';
-    $userFavorites.className = 'user-favorites';
-    data.lastView = data.view;
-    data.view = 'favorites-page';
-  } else if (data.lastView === 'home-page') {
-    $selection.className = 'selection hidden';
-    $home.className = 'home';
-    data.lastView = data.view;
-    data.view = 'home-page';
-  } else if (data.lastView === 'search-results-page') {
-    $selection.className = 'selection hidden';
-    $searchResults.className = 'search-results';
-    data.lastView = data.view;
-    data.view = 'search-results-page';
-  }
-});
 
 $favorites.addEventListener('click', function () {
   removeAllChildNodes($favoritesRow);
-  data.lastView = data.view;
-  data.view = 'favorites-page';
   $modal.className = 'modal hidden';
   isOpen = false;
   $home.className = 'home hidden';
@@ -69,21 +38,8 @@ $favorites.addEventListener('click', function () {
   addFavoritesEntries(data.entries);
 });
 
-$menuSearch.addEventListener('click', function () {
-  data.lastView = data.view;
-  data.view = 'home-page';
-  $modal.className = 'modal hidden';
-  isOpen = false;
-  $form.reset();
-  reset();
-  $home.className = 'home';
-  $searchResults.className = 'search-results hidden';
-  $selection.className = 'selection hidden';
-  $userFavorites.className = 'user-favorites hidden';
-});
-
 $downArrow.addEventListener('click', function () {
-  if (isOpen || $likeModal.className === 'like-modal' || $noResults.className === 'no-results') {
+  if (isOpen || $userFavorites.className === 'user-favorites' || $likeModal.className === 'like-modal') {
     $modal.className = 'modal hidden';
     isOpen = false;
   } else {
@@ -95,8 +51,6 @@ $downArrow.addEventListener('click', function () {
 $favoritesRow.addEventListener('click', function () {
   for (var n = 0; n < $favoritesImages.length; n++) {
     if (event.target === $favoritesImages[n].firstChild) {
-      data.lastView = data.view;
-      data.view = 'selection-page';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(data.entries[n]);
@@ -109,18 +63,10 @@ $favoritesRow.addEventListener('click', function () {
 $row.addEventListener('click', function () {
   for (var n = 0; n < $imagesArray.length; n++) {
     if (event.target === $imagesArray[n].firstChild) {
-      data.lastView = data.view;
-      data.view = 'selection-page';
       $searchResults.className = 'search-results hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(dataArray[n]);
-      var $like = document.querySelector('.heart');
-      for (var i = 0; i < data.entries.length; i++) {
-        if (dataArray[n].image === data.entries[i].image) {
-          $like.style.color = 'red';
-        }
-      }
     }
   }
 });
@@ -128,8 +74,6 @@ $row.addEventListener('click', function () {
 $entries.addEventListener('click', function () {
   for (var v = 0; v < $entriesArray.length; v++) {
     if (event.target === $entriesArray[v].firstChild) {
-      data.lastView = data.view;
-      data.view = 'selection-page';
       $home.className = 'home hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
@@ -141,8 +85,6 @@ $entries.addEventListener('click', function () {
 $headerTitle.addEventListener('click', function () {
   $form.reset();
   reset();
-  data.lastView = data.view;
-  data.view = 'home-page';
   $modal.className = 'modal hidden';
   $home.className = 'home';
   $searchResults.className = 'search-results hidden';
@@ -156,20 +98,17 @@ $searchValues.addEventListener('keyup', function () {
 
 $form.addEventListener('submit', function () {
   event.preventDefault();
-  data.lastView = data.view;
-  data.view = 'search-results-page';
   $home.className = 'home hidden';
   $searchResults.className = 'search-results';
 });
 
 function timeoutFunction() {
-  var userData = $searchValues.value.split(' ').join('&');
-  data.lastSearch = userData;
-  sendData(userData);
+  var data = $searchValues.value.split(' ').join('&');
+  sendData(data);
 }
 
 function sendData(value) {
-  var xhr = new XMLHttpRequest();
+  xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://openaccess-api.clevelandart.org/api/artworks/?q=' + value);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
@@ -187,8 +126,8 @@ function getFirst20Entries(data) {
   $loaderPage.className = 'loader-page hidden';
   dataArray = [];
   var length = 20;
-  if (data.length) {
-    for (var i = 0; i < data.length && i < length; i++) {
+  if (data.length >= 20) {
+    for (var i = 0; i < length; i++) {
       if (data[i].images !== null) {
         appendEntry(data[i]);
         loadSearch(data[i]);
@@ -198,8 +137,11 @@ function getFirst20Entries(data) {
       }
     }
   } else {
-    $home.className = 'home hidden';
-    $noResults.className = 'no-results';
+    for (var j = 0; j < data.length; j++) {
+      appendEntry(data[j]);
+      loadSearch(data[j]);
+      renderSelectionData(data[j]);
+    }
   }
 }
 
@@ -236,7 +178,6 @@ function loadSearch(dataObject) {
   var $newImg = document.createElement('img');
   $newCol.setAttribute('class', 'col-half col-quarter');
   $newCol.appendChild($newImg);
-  $newImg.style.cursor = 'pointer';
 
   if (dataObject.images !== null) {
     $newImg.setAttribute('src', dataObject.images.web.url);
@@ -283,7 +224,6 @@ function renderSelection(object) {
   $artist.textContent = object.artist;
   $description.textContent = object.description;
   $like.setAttribute('class', 'fas fa-heart heart');
-  $like.style.cursor = 'pointer';
 
   $selectionContainer.appendChild($newImg);
   $selectionContainer.appendChild($like);
@@ -332,7 +272,6 @@ function addFavoritesEntries(arrayOfObjects) {
   for (var i = 0; i < arrayOfObjects.length; i++) {
     var $newCol = document.createElement('div');
     var $newImg = document.createElement('img');
-    $newImg.style.cursor = 'pointer';
     $newCol.setAttribute('class', 'col-half-fav col-quarter');
     $newCol.appendChild($newImg);
     $newImg.setAttribute('src', arrayOfObjects[i].image);
