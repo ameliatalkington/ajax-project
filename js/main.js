@@ -134,6 +134,12 @@ $entries.addEventListener('click', function () {
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
       renderSelection(dataArray[v]);
+      var $like = document.querySelector('.heart');
+      for (var i = 0; i < data.entries.length; i++) {
+        if (dataArray[v].image === data.entries[i].image) {
+          $like.style.color = 'red';
+        }
+      }
     }
   }
 });
