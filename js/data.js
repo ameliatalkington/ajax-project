@@ -4,7 +4,7 @@ var previousDataJSON = localStorage.getItem('ajax-project-local-storage');
 
 var data = {
   nextEntryID: 1,
-  entries: [],
+  favorites: [],
   selectedID: null,
   view: 'home-page',
   lastView: null,

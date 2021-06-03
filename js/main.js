@@ -30,6 +30,10 @@ var $back = document.querySelector('.back-button');
 var $noResults = document.querySelector('.no-results');
 var $okButton = document.querySelector('.ok');
 
+fetch('https://collectionapi.metmuseum.org/public/collection/v1/search?q=sunflowers')
+  .then(res => res.json())
+  .then(data => console.log(data));
+
 $okButton.addEventListener('click', function () {
   $form.reset();
   reset();
@@ -66,7 +70,7 @@ $favorites.addEventListener('click', function () {
   $searchResults.className = 'search-results hidden';
   $selection.className = 'selection hidden';
   $userFavorites.className = 'user-favorites';
-  addFavoritesEntries(data.entries);
+  addFavoritesEntries(data.favorites);
 });
 
 $menuSearch.addEventListener('click', function () {
@@ -99,7 +103,7 @@ $favoritesRow.addEventListener('click', function () {
       data.view = 'selection-page';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
-      renderSelection(data.entries[n]);
+      renderSelection(data.favorites[n]);
       var $like = document.querySelector('.heart');
       $like.style.color = 'red';
     }
@@ -116,8 +120,8 @@ $row.addEventListener('click', function () {
       $selection.className = 'selection';
       renderSelection(dataArray[n]);
       var $like = document.querySelector('.heart');
-      for (var i = 0; i < data.entries.length; i++) {
-        if (dataArray[n].image === data.entries[i].image) {
+      for (var i = 0; i < data.favorites.length; i++) {
+        if (dataArray[n].image === data.favorites[i].image) {
           $like.style.color = 'red';
         }
       }
@@ -135,8 +139,8 @@ $entries.addEventListener('click', function () {
       $selection.className = 'selection';
       renderSelection(dataArray[v]);
       var $like = document.querySelector('.heart');
-      for (var i = 0; i < data.entries.length; i++) {
-        if (dataArray[v].image === data.entries[i].image) {
+      for (var i = 0; i < data.favorites.length; i++) {
+        if (dataArray[v].image === data.favorites[i].image) {
           $like.style.color = 'red';
         }
       }
@@ -304,7 +308,7 @@ function renderSelection(object) {
     } else {
       $like.style.color = 'red';
       object.entryID = data.nextEntryID;
-      data.entries.push(object);
+      data.favorites.push(object);
       data.nextEntryID++;
     }
   });
@@ -315,13 +319,13 @@ function renderSelection(object) {
 }
 
 $yes.addEventListener('click', function () {
-  for (var j = 0; j < data.entries.length; j++) {
-    if (data.entries[j].entryID === data.selectedID) {
-      data.entries.splice(j, 1);
+  for (var j = 0; j < data.favorites.length; j++) {
+    if (data.favorites[j].entryID === data.selectedID) {
+      data.favorites.splice(j, 1);
     }
   }
   removeAllChildNodes($favoritesRow);
-  addFavoritesEntries(data.entries);
+  addFavoritesEntries(data.favorites);
   $likeModal.className = 'like-modal hidden';
   $selection.className = 'selection hidden';
   $userFavorites.className = 'user-favorites';
@@ -331,7 +335,6 @@ function reset() {
   removeAllChildNodes($row);
   removeAllChildNodes($entries);
   removeAllChildNodes($selectionContainer);
-
 }
 
 function addFavoritesEntries(arrayOfObjects) {
