@@ -30,6 +30,10 @@ var $back = document.querySelector('.back-button');
 var $noResults = document.querySelector('.no-results');
 var $okButton = document.querySelector('.ok');
 
+fetch('https://collectionapi.metmuseum.org/public/collection/v1/search?q=sunflowers')
+  .then(res => res.json())
+  .then(data => console.log(data));
+
 $okButton.addEventListener('click', function () {
   $form.reset();
   reset();
