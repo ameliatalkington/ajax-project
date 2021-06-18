@@ -65,9 +65,9 @@ header {
 
 .container.image {
   height: 100%;
-  background-image: url(../images/new-picasso.jpg);
+  background-image: url(../images/new-golden-lining.jpg);
   opacity: 0.45;
-  object-fit: scale-down;
+  object-fit: contain;
   background-repeat: no-repeat;
   background-size: inherit;
 }
