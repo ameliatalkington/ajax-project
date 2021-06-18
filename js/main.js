@@ -30,10 +30,6 @@ var $back = document.querySelector('.back-button');
 var $noResults = document.querySelector('.no-results');
 var $okButton = document.querySelector('.ok');
 
-fetch('https://collectionapi.metmuseum.org/public/collection/v1/search?q=sunflowers')
-  .then(res => res.json())
-  .then(data => console.log(data));
-
 $okButton.addEventListener('click', function () {
   $form.reset();
   reset();
@@ -173,39 +169,37 @@ $form.addEventListener('submit', function () {
 });
 
 function timeoutFunction() {
-  var userData = $searchValues.value.split(' ').join('&');
+  var userData = $searchValues.value.split(' ').join('+');
   data.lastSearch = userData;
   sendData(userData);
 }
 
 function sendData(value) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://openaccess-api.clevelandart.org/api/artworks/?q=' + value);
-  xhr.responseType = 'json';
-  xhr.addEventListener('load', function () {
-    getFirst20Entries(xhr.response.data);
-  });
-  $loaders[0].className = 'loader';
-  $loaders[1].className = 'loader';
-  $loaderPage.className = 'loader-page';
-  xhr.send();
+  fetch(`https://api.artic.edu/api/v1/artworks/search?q=${value}&limit=20`)
+    .then(res => res.json())
+    .then(data => getFirst20Entries(data.data));
 }
 
 function getFirst20Entries(data) {
   $loaders[0].className = 'loader hidden';
   $loaders[1].className = 'loader hidden';
   $loaderPage.className = 'loader-page hidden';
-  dataArray = [];
-  var length = 20;
+
   if (data.length) {
-    for (var i = 0; i < data.length && i < length; i++) {
-      if (data[i].images !== null) {
-        appendEntry(data[i]);
-        loadSearch(data[i]);
-        renderSelectionData(data[i]);
-      } else {
-        length++;
-      }
+    for (var i = 0; i < data.length; i++) {
+      var imageURL = '';
+      fetch(`https://api.artic.edu/api/v1/artworks/${data[i].id}`)
+        .then(res => res.json())
+        .then(dataId => {
+          appendEntry(dataId.data);
+          fetch(`https://api.artic.edu/api/v1/artworks/${dataId.data.id}?fields=id,title,image_id`)
+            .then(res => res.json())
+            .then(data => {
+              imageURL = `${data.config.iiif_url}/${data.data.image_id}/full/843,/0/default.jpg`;
+              loadSearch(dataId.data, imageURL);
+              renderSelectionData(dataId, imageURL);
+            });
+        });
     }
   } else {
     $home.className = 'home hidden';
@@ -222,11 +216,11 @@ function appendEntry(dataObject) {
   if (dataObject.title !== null) {
     textContent = dataObject.title;
   }
-  if (dataObject.creators.length > 0) {
-    textContent = textContent + ', ' + dataObject.creators[0].description;
+  if (dataObject.artist_title) {
+    textContent = textContent + ', ' + dataObject.artist_title;
   }
-  if (dataObject.department !== null) {
-    textContent = textContent + ', ' + dataObject.department;
+  if (dataObject.medium_display !== null) {
+    textContent = textContent + ', ' + dataObject.medium_display;
   }
 
   $h3.textContent = textContent;
@@ -241,7 +235,7 @@ function removeAllChildNodes(parent) {
   }
 }
 
-function loadSearch(dataObject) {
+function loadSearch(dataObject, imageURL) {
   var $newCol = document.createElement('div');
   var $newImg = document.createElement('img');
   $newCol.setAttribute('class', 'col-half col-quarter');
@@ -249,7 +243,7 @@ function loadSearch(dataObject) {
   $newImg.style.cursor = 'pointer';
 
   if (dataObject.images !== null) {
-    $newImg.setAttribute('src', dataObject.images.web.url);
+    $newImg.setAttribute('src', imageURL);
     $newImg.setAttribute('alt', dataObject.title);
   } else {
     $newImg.setAttribute('src', 'images/placeholder-image.jpg');
@@ -259,23 +253,24 @@ function loadSearch(dataObject) {
   $row.appendChild($newCol);
 }
 
-function renderSelectionData(dataObject) {
+function renderSelectionData(dataObject, imageURL) {
   var newObject = {
     image: '',
     title: '',
     artist: '',
-    description: ''
+    exhibitionHistory: ''
   };
-  if (dataObject.images !== null) {
-    newObject.image = dataObject.images.web.url;
+  if (imageURL) {
+    newObject.image = imageURL;
   } else {
     newObject.image = 'images/placeholder-image.jpg';
   }
-  newObject.title = dataObject.title;
-  if (dataObject.creators.length > 0) {
-    newObject.artist = dataObject.creators[0].description;
+  newObject.title = dataObject.data.title;
+  if (dataObject.data.artist_title) {
+    newObject.artist = dataObject.data.artist_title;
   }
-  newObject.description = dataObject.wall_description;
+  newObject.exhibitionHistory = dataObject.data.exhibition_history;
+
   dataArray.push(newObject);
 }
 
@@ -286,12 +281,12 @@ function renderSelection(object) {
   var $title = document.createElement('h3');
   var $like = document.createElement('i');
   var $artist = document.createElement('h4');
-  var $description = document.createElement('p');
+  var $exhibitionHistory = document.createElement('p');
 
   $newImg.setAttribute('src', object.image);
   $title.textContent = object.title;
   $artist.textContent = object.artist;
-  $description.textContent = object.description;
+  $exhibitionHistory.textContent = object.exhibitionHistory;
   $like.setAttribute('class', 'fas fa-heart heart');
   $like.style.cursor = 'pointer';
 
@@ -299,7 +294,7 @@ function renderSelection(object) {
   $selectionContainer.appendChild($like);
   $selectionContainer.appendChild($title);
   $selectionContainer.appendChild($artist);
-  $selectionContainer.appendChild($description);
+  $selectionContainer.appendChild($exhibitionHistory);
 
   $like.addEventListener('click', function () {
     if ($like.style.color === 'red') {
