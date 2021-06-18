@@ -1,34 +1,34 @@
 // const { formatters } = require("stylelint");
 
-var $searchValues = document.querySelector('#search');
-var $entries = document.querySelector('.entries');
-var timeout;
-var $form = document.querySelector('form');
-var $home = document.querySelector('.home');
-var $searchResults = document.querySelector('.search-results');
-var $row = document.querySelector('.row');
-var $entriesArray = $entries.childNodes;
-var $imagesArray = $row.childNodes;
-var $headerTitle = document.querySelector('.title');
-var $selection = document.querySelector('.selection');
-var $selectionContainer = document.querySelector('.selection-container');
-var dataArray = [];
-var $downArrow = document.querySelector('.down-arrow');
-var $modal = document.querySelector('.modal');
-var isOpen = false;
-var $favorites = document.querySelector('.favorites');
-var $menuSearch = document.querySelector('.menu-search');
-var $userFavorites = document.querySelector('.user-favorites');
-var $favoritesRow = document.querySelector('.favorites-row');
-var $favoritesImages = $favoritesRow.childNodes;
-var $likeModal = document.querySelector('.like-modal');
-var $cancel = document.querySelector('.cancel');
-var $yes = document.querySelector('.yes');
-var $loaders = document.querySelectorAll('.loader');
-var $loaderPage = document.querySelector('.loader-page');
-var $back = document.querySelector('.back-button');
-var $noResults = document.querySelector('.no-results');
-var $okButton = document.querySelector('.ok');
+const $searchValues = document.querySelector('#search');
+const $entries = document.querySelector('.entries');
+let timeout;
+const $form = document.querySelector('form');
+const $home = document.querySelector('.home');
+const $searchResults = document.querySelector('.search-results');
+const $row = document.querySelector('.row');
+const $entriesArray = $entries.childNodes;
+const $imagesArray = $row.childNodes;
+const $headerTitle = document.querySelector('.title');
+const $selection = document.querySelector('.selection');
+const $selectionContainer = document.querySelector('.selection-container');
+const $downArrow = document.querySelector('.down-arrow');
+const $modal = document.querySelector('.modal');
+let isOpen = false;
+const dataArray = [];
+const $favorites = document.querySelector('.favorites');
+const $menuSearch = document.querySelector('.menu-search');
+const $userFavorites = document.querySelector('.user-favorites');
+const $favoritesRow = document.querySelector('.favorites-row');
+const $favoritesImages = $favoritesRow.childNodes;
+const $likeModal = document.querySelector('.like-modal');
+const $cancel = document.querySelector('.cancel');
+const $yes = document.querySelector('.yes');
+const $loaders = document.querySelectorAll('.loader');
+const $loaderPage = document.querySelector('.loader-page');
+const $back = document.querySelector('.back-button');
+const $noResults = document.querySelector('.no-results');
+const $okButton = document.querySelector('.ok');
 
 $okButton.addEventListener('click', function () {
   $form.reset();
@@ -70,6 +70,7 @@ $favorites.addEventListener('click', function () {
 });
 
 $menuSearch.addEventListener('click', function () {
+  dataArray.length = 0;
   data.lastView = data.view;
   data.view = 'home-page';
   $modal.className = 'modal hidden';
@@ -93,31 +94,31 @@ $downArrow.addEventListener('click', function () {
 });
 
 $favoritesRow.addEventListener('click', function () {
-  for (var n = 0; n < $favoritesImages.length; n++) {
-    if (event.target === $favoritesImages[n].firstChild) {
+  for (let a = 0; a < $favoritesImages.length; a++) {
+    if (event.target === $favoritesImages[a].firstChild) {
       data.lastView = data.view;
       data.view = 'selection-page';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
-      renderSelection(data.favorites[n]);
-      var $like = document.querySelector('.heart');
+      renderSelection(data.favorites[a]);
+      const $like = document.querySelector('.heart');
       $like.style.color = 'red';
     }
   }
 });
 
 $row.addEventListener('click', function () {
-  for (var n = 0; n < $imagesArray.length; n++) {
-    if (event.target === $imagesArray[n].firstChild) {
+  for (let b = 0; b < $imagesArray.length; b++) {
+    if (event.target === $imagesArray[b].firstChild) {
       data.lastView = data.view;
       data.view = 'selection-page';
       $searchResults.className = 'search-results hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
-      renderSelection(dataArray[n]);
-      var $like = document.querySelector('.heart');
-      for (var i = 0; i < data.favorites.length; i++) {
-        if (dataArray[n].image === data.favorites[i].image) {
+      renderSelection(dataArray[b]);
+      const $like = document.querySelector('.heart');
+      for (let c = 0; c < data.favorites.length; c++) {
+        if (dataArray[b].image === data.favorites[c].image) {
           $like.style.color = 'red';
         }
       }
@@ -126,17 +127,17 @@ $row.addEventListener('click', function () {
 });
 
 $entries.addEventListener('click', function () {
-  for (var v = 0; v < $entriesArray.length; v++) {
-    if (event.target === $entriesArray[v].firstChild) {
+  for (let d = 0; d < $entriesArray.length; d++) {
+    if (event.target === $entriesArray[d].firstChild) {
       data.lastView = data.view;
       data.view = 'selection-page';
       $home.className = 'home hidden';
       $userFavorites.className = 'user-favorites hidden';
       $selection.className = 'selection';
-      renderSelection(dataArray[v]);
-      var $like = document.querySelector('.heart');
-      for (var i = 0; i < data.favorites.length; i++) {
-        if (dataArray[v].image === data.favorites[i].image) {
+      renderSelection(dataArray[d]);
+      const $like = document.querySelector('.heart');
+      for (let e = 0; e < data.favorites.length; e++) {
+        if (dataArray[d].image === data.favorites[e].image) {
           $like.style.color = 'red';
         }
       }
@@ -145,8 +146,9 @@ $entries.addEventListener('click', function () {
 });
 
 $headerTitle.addEventListener('click', function () {
-  $form.reset();
+  dataArray.length = 0;
   reset();
+  $form.reset();
   data.lastView = data.view;
   data.view = 'home-page';
   $modal.className = 'modal hidden';
@@ -169,7 +171,7 @@ $form.addEventListener('submit', function () {
 });
 
 function timeoutFunction() {
-  var userData = $searchValues.value.split(' ').join('+');
+  const userData = $searchValues.value.split(' ').join('+');
   data.lastSearch = userData;
   sendData(userData);
 }
@@ -186,16 +188,16 @@ function getFirst20Entries(data) {
   $loaderPage.className = 'loader-page hidden';
 
   if (data.length) {
-    for (var i = 0; i < data.length; i++) {
-      var imageURL = '';
-      fetch(`https://api.artic.edu/api/v1/artworks/${data[i].id}`)
+    for (let f = 0; f < data.length; f++) {
+      let imageURL = '';
+      fetch(`https://api.artic.edu/api/v1/artworks/${data[f].id}`)
         .then(res => res.json())
         .then(dataId => {
-          appendEntry(dataId.data);
           fetch(`https://api.artic.edu/api/v1/artworks/${dataId.data.id}?fields=id,title,image_id`)
             .then(res => res.json())
             .then(data => {
               imageURL = `${data.config.iiif_url}/${data.data.image_id}/full/843,/0/default.jpg`;
+              appendEntry(dataId.data);
               loadSearch(dataId.data, imageURL);
               renderSelectionData(dataId, imageURL);
             });
@@ -208,10 +210,10 @@ function getFirst20Entries(data) {
 }
 
 function appendEntry(dataObject) {
-  var $newSuggestion = document.createElement('div');
-  var $h3 = document.createElement('h3');
+  const $newSuggestion = document.createElement('div');
+  const $h3 = document.createElement('h3');
   $newSuggestion.setAttribute('class', 'entry');
-  var textContent = '';
+  let textContent = '';
 
   if (dataObject.title !== null) {
     textContent = dataObject.title;
@@ -236,8 +238,8 @@ function removeAllChildNodes(parent) {
 }
 
 function loadSearch(dataObject, imageURL) {
-  var $newCol = document.createElement('div');
-  var $newImg = document.createElement('img');
+  const $newCol = document.createElement('div');
+  const $newImg = document.createElement('img');
   $newCol.setAttribute('class', 'col-half col-quarter');
   $newCol.appendChild($newImg);
   $newImg.style.cursor = 'pointer';
@@ -254,7 +256,7 @@ function loadSearch(dataObject, imageURL) {
 }
 
 function renderSelectionData(dataObject, imageURL) {
-  var newObject = {
+  const newObject = {
     image: '',
     title: '',
     artist: '',
@@ -277,11 +279,11 @@ function renderSelectionData(dataObject, imageURL) {
 function renderSelection(object) {
   removeAllChildNodes($selectionContainer);
 
-  var $newImg = document.createElement('img');
-  var $title = document.createElement('h3');
-  var $like = document.createElement('i');
-  var $artist = document.createElement('h4');
-  var $exhibitionHistory = document.createElement('p');
+  const $newImg = document.createElement('img');
+  const $title = document.createElement('h3');
+  const $like = document.createElement('i');
+  const $artist = document.createElement('h4');
+  const $exhibitionHistory = document.createElement('p');
 
   $newImg.setAttribute('src', object.image);
   $title.textContent = object.title;
@@ -314,9 +316,9 @@ function renderSelection(object) {
 }
 
 $yes.addEventListener('click', function () {
-  for (var j = 0; j < data.favorites.length; j++) {
-    if (data.favorites[j].entryID === data.selectedID) {
-      data.favorites.splice(j, 1);
+  for (let g = 0; g < data.favorites.length; g++) {
+    if (data.favorites[g].entryID === data.selectedID) {
+      data.favorites.splice(g, 1);
     }
   }
   removeAllChildNodes($favoritesRow);
@@ -333,14 +335,14 @@ function reset() {
 }
 
 function addFavoritesEntries(arrayOfObjects) {
-  for (var i = 0; i < arrayOfObjects.length; i++) {
-    var $newCol = document.createElement('div');
-    var $newImg = document.createElement('img');
+  for (let h = 0; h < arrayOfObjects.length; h++) {
+    const $newCol = document.createElement('div');
+    const $newImg = document.createElement('img');
     $newImg.style.cursor = 'pointer';
     $newCol.setAttribute('class', 'col-half-fav col-quarter');
     $newCol.appendChild($newImg);
-    $newImg.setAttribute('src', arrayOfObjects[i].image);
-    $newImg.setAttribute('alt', arrayOfObjects[i].title);
+    $newImg.setAttribute('src', arrayOfObjects[h].image);
+    $newImg.setAttribute('alt', arrayOfObjects[h].title);
     $favoritesRow.appendChild($newCol);
   }
 }
